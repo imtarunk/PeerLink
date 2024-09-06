@@ -6,20 +6,16 @@ const FriendRecbox = () => {
 
   const styles = {
     card: {
-      width: '320px',
-      height: 'auto',
-
       border: "1px solid  #E5E7EB",
       borderRadius: '15px',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
-      margin: '10%',
-      marginTop: '15%'
+      marginTop: '12%'
     },
     title: {
       padding: '10px 15px',
-      fontWeight: 600,
+      fontWeight: 900,
       fontSize: '1.3em',
     },
   };

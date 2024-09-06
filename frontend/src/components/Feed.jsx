@@ -9,7 +9,7 @@ import { CiLocationOn } from "react-icons/ci";
 import PostCard from './postCard';
 const Feed = () => {
   return (
-    <div className="w-[60%]  border-l border-r border-gray h-[100vw] ">
+    <div className="w-[50%]  border-l border-r border-gray h-[100vw] ">
       <center>
         <div className="flex items-center justify-evenly  border-b border-b-gray-200 h-12">
           <div className="w-[40%]">
@@ -41,15 +41,47 @@ const Feed = () => {
         <div className="ml-[18%] mr-2 p-3">
           <div className="w-[100%] flex items-center relative">
             <div class="flex justify-evenly space-x-2 text-2xl">
-              <CiImageOn class="hover:bg-gray-200 rounded-full" />
-              <MdOutlineGifBox class="hover:bg-gray-200 rounded-full" />
-              <MdOutlinePoll class="hover:bg-gray-200 rounded-full" />
-              <CiFaceSmile class="hover:bg-gray-200 rounded-full" />
-              <TbCalendarTime class="hover:bg-gray-200 rounded-full" />
-              <CiLocationOn class="hover:bg-gray-200 rounded-full" />
-              <button className="bg-black text-white rounded-full p-1 text-sm w-[60px] items-center absolute right-2 shadow-md hover:bg-blue-600 focus:outline-none">
+              <div className='flex items-center'>
+                <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+                  <CiImageOn size="24px" />
+                </div>
+              </div>
+
+              <div className='flex items-center'>
+                <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+                  <MdOutlineGifBox size="24px" />
+                </div>
+              </div>
+
+              <div className='flex items-center'>
+                <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+                  <MdOutlinePoll size="24px" />
+                </div>
+              </div>
+
+              <div className='flex items-center'>
+                <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+                  <CiFaceSmile size="24px" />
+                </div>
+              </div>
+
+              <div className='flex items-center'>
+                <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+                  <TbCalendarTime size="24px" />
+                </div>
+              </div>
+
+              <div className='flex items-center'>
+                <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+                  <CiLocationOn size="24px" />
+                </div>
+              </div>
+
+              <button className="bg-black text-white rounded-full p-2 text-sm w-[60px] flex items-center justify-center absolute right-2  hover:bg-blue">
                 Post
               </button>
+
+
             </div>
           </div>
         </div>

@@ -30,14 +30,54 @@ const PostCard = () => {
       </div>
       <div className='ml-[10%] mt-2 mb-2 relative'>
         <div className="reactuonIcon flex items-center space-x-4 text-xl">
-          <TiMessages />
-          <CiRepeat />
-          <CiHeart />
-          <MdOutlinePoll />
-          <CiBookmark />
+          <div className='flex items-center'>
+            <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+              <TiMessages size='24px' />
+            </div>
+            <p className="ml-2">0</p>
+          </div>
+
+          <div className='flex items-center'>
+            <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+              <CiRepeat size='24px' />
+            </div>
+            <p className="ml-2">0</p>
+          </div>
+
+          <div className='flex items-center'>
+            <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+              <CiHeart size='24px' />
+            </div>
+            <p className="ml-2">0</p>
+          </div>
+
+          <div className='flex items-center'>
+            <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+              <MdOutlinePoll size='24px' />
+            </div>
+            <p className="ml-2">0</p>
+          </div>
+
+          <div className='flex items-center'>
+            <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+              <CiBookmark size='24px' />
+            </div>
+            <p className="ml-2">0</p>
+          </div>
+
           <div className="ml-8 flex absolute space-x-2 right-3 ">
-            <CiShare2 />
-            <CiBookmark />
+            <div className='flex items-center'>
+              <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+                <CiShare2 size='24px' />
+              </div>
+              <p className="ml-2">0</p>
+            </div>
+            <div className='flex items-center'>
+              <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer">
+                <CiBookmark size='24px' />
+              </div>
+              <p className="ml-2">0</p>
+            </div>
           </div>
         </div>
       </div>
@@ -47,3 +87,4 @@ const PostCard = () => {
 }
 
 export default PostCard;
+

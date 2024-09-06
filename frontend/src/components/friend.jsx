@@ -1,4 +1,5 @@
 import React from "react";
+import Avatar from '@mui/material/Avatar';
 
 const Friend = () => {
 
@@ -29,13 +30,6 @@ const Friend = () => {
       fontSize: '.9em',
       color: '#64696e',
     },
-    image: {
-      width: '60px',
-      height: '60px',
-      background: 'linear-gradient(295deg, rgba(22,19,70,1) 41%, rgba(89,177,237,1) 100%)',
-      borderRadius: '50%',
-      marginRight: '15px',
-    },
     follow: {
       border: 'none',
       borderRadius: '25px',
@@ -51,10 +45,14 @@ const Friend = () => {
   return (
     <div style={styles.userContainer}>
       <div style={styles.user}>
-        <div style={styles.image}></div>
+        <Avatar alt="Remy Sharp" src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1725552000&semt=ais_hybrid" sx={{ width: 50, height: 50 }} className='mx-2 my-2' />
         <div style={styles.userContent}>
           <div className="text">
-            <span style={styles.name}>Name</span>
+            <span style={styles.name}>
+              {/* This is for frined sujestion */}
+              Name
+
+            </span>
             <p style={styles.username}>@namedlorem</p>
           </div>
           <button className="border-none rounded-full bg-[#0f1113] text-white px-4 py-2 font-bold hover:bg-blue-500 cursor-pointer
