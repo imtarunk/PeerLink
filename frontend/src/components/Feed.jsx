@@ -8,18 +8,26 @@ import { TbCalendarTime } from "react-icons/tb";
 import { CiLocationOn } from "react-icons/ci";
 import PostCard from './postCard';
 const Feed = () => {
+
+  const styles = {
+    feedContainer: `
+    @apply overflow-y-auto h-screen pl-20 relative;
+  `,
+  };
+
   return (
-    <div className="w-[50%]  border-l border-r border-gray h-[100vw] ">
+    <div className="w-[50%]  border-l border-r border-gray h-[100vw] relative left-[20%]">
       <center>
         <div className="flex items-center justify-evenly  border-b border-b-gray-200 h-12">
-          <div className="w-[40%]">
-            <h1 className="font-bold  text-black text-sm ">For you</h1>
+          <div className="w-full h-full  hover:border-b-4 border-blue-500 rounded-b-l">
+            <div className="w-[40%]">
+              <h1 className="font-bold  text-black text-sm ">For you</h1>
+            </div>
           </div>
-          <div className="w-[40%]">
-            <h1 className="font-bold text-black text-sm ">Following</h1>
-          </div>
-          <div className="w-[20%] ">
-            <IoSettingsOutline className="font-normal text-black text-lg float-right mr-5" />
+          <div className="w-full h-full  hover:border-b-4 border-blue-500 rounded-b-l">
+            <div className="w-[40%]">
+              <h1 className="font-bold text-black text-sm ">Following</h1>
+            </div>
           </div>
         </div>
       </center>

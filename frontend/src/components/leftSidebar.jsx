@@ -8,16 +8,17 @@ import { CiBookmark } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { CiCircleMore } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
-
+import UserProfile from './userProfile'
+import { Link } from 'react-router-dom'
 
 const LeftSidebar = () => {
   return (
-    <div className='w-[20%] h-auto flex justify-center'>
-      <center className='w-full'>
+    <div className='fixed left-[5%] top-0 w-[20%] h-screen flex justify-center m-4 p-4 mt-1 pt-1 items-start'>
+      <center className='w-full space-x-1 space-y-5'>
         <div className="logo ">
           <img className="flex w-[65%]" src={travelmateLogo} alt="" />
         </div>
-        <div>
+        <div className='space-y-5' >
           <div className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full">
             <CiHome size="25px" />
             <h1 className='font-bold text-lg ml-2'>Home</h1>
@@ -39,10 +40,12 @@ const LeftSidebar = () => {
 
             <h1 className='font-bold text-lg ml-2'>Bookmarks</h1>
           </div>
-          <div className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full">
-            <CiUser size="25px" />
-            <h1 className='font-bold text-lg ml-2'>Profile</h1>
-          </div>
+          <Link to='/profile'>
+            <div className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full">
+              <CiUser size="25px" />
+              <h1 className='font-bold text-lg ml-2'>Profile</h1>
+            </div>
+          </Link>
           <div className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full">
             <CiCircleMore size="25px" />
             <h1 className='font-bold text-lg ml-2'>More</h1>
@@ -52,9 +55,21 @@ const LeftSidebar = () => {
             <h1 className='font-bold text-lg ml-2'>Logout</h1>
           </div>
 
-          <button className='px-4 py-2 border-none rounded-full  hover:bg-gray-200 hover:text-black hover:cursor-pointer text-md text-white w-full bg-black cl-white font-bold'>Post</button>
+          <div>
+            <a href="#" className="button type-C relative w-full h-14 text-base font-bold text-[#ffffff] tracking-[2px] transition-all duration-300 ease-in-out hover:tracking-[6px] bg-black flex items-center justify-center rounded-full overflow-hidden flex-wrap ">
+              <span className="button__text relative z-10">POST</span>
+              <div className="button__drow1 absolute top-[-1rem] left-[2.5rem] w-8 h-0 bg-[#defffa] rounded-lg"></div>
+              <div className="button__drow2 absolute top-[2.75rem] left-[4.75rem] w-8 h-0 bg-[#000000] rounded-lg"></div>
+            </a>
+          </div>
+
 
         </div>
+        <Link to='/profile'>
+          <UserProfile />
+        </Link>
+
+
       </center>
     </div>
 

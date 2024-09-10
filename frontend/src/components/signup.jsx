@@ -7,14 +7,27 @@ const Signup = () => {
       <p className="text-center font-sans font-extrabold text-[28px] my-[10px] mb-[30px]">Join our Peer</p>
       <form className="w-full flex flex-col gap-[18px] mb-[15px]">
         <input
+          type="name"
+          className="rounded-[20px] border border-gray-300 outline-none p-[12px_15px] box-border"
+          placeholder="Full name"
+        />
+        <select id="mySelect" placeholder="gender" className="rounded-[20px] border border-gray-300 outline-none p-[12px_15px] box-border"
+        >
+          <option value="gender" style={{ color: '#C7D2FE' }}>Gender</option>
+          <option value="Male" style={{ color: '#C7D2FE' }}>Male</option>
+          <option value="Female" style={{ color: '#C7D2FE' }}>Female</option>
+        </select>
+
+        <input
           type="email"
           className="rounded-[20px] border border-gray-300 outline-none p-[12px_15px] box-border"
           placeholder="Email"
         />
+
         <input
           type="password"
           className="rounded-[20px] border border-gray-300 outline-none p-[12px_15px] box-border"
-          placeholder="Password"
+          placeholder="New password"
         />
         <input
           type="password"

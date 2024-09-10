@@ -2,10 +2,10 @@ import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './home';
 import Feed from './Feed'
-import Profile from './Profile'
-import AuthPage from './authPage'
+import ProfileFeed from './Profile'
 import Login from './login';
 import Signup from './signup';
+import Authpage from './authPage';
 
 const Body = () => {
 
@@ -20,13 +20,13 @@ const Body = () => {
         },
         {
           path: "/profile",
-          element: <Profile />,
+          element: <ProfileFeed />,
         }
       ]
     },
     {
       path: "/login",
-      element: <AuthPage />,
+      element: <Authpage />,
       children: [
         {
           path: "/login",
@@ -38,7 +38,7 @@ const Body = () => {
     },
     {
       path: "/signup",
-      element: <AuthPage />,
+      element: <Authpage />,
       children: [
         {
           path: "/signup",

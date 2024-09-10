@@ -1,25 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom"
+import { IoSchoolOutline } from "react-icons/io5";
 
 
 const Login = () => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   return (
     <div className="w-[350px] h-auto bg-white shadow-[0_5px_15px_rgba(0,0,0,0.35)] rounded-[10px] p-[20px_30px] pt-[20px] pb-[30px] box-border">
       <p className="text-center font-sans font-extrabold text-[28px] my-[10px] mb-[30px]">Welcome back</p>
       <form className="w-full flex flex-col gap-[18px] mb-[15px]">
+        {/* Email here */}
         <input
           type="email"
+          value={email}
+          onClick={(e) => setEmail(e.target.value)}
           className="rounded-[20px] border border-gray-300 outline-none p-[12px_15px] box-border"
           placeholder="Email"
         />
+        {/* Password here */}
         <input
           type="password"
+          value={password}
+          onClick={(e) => setPassword(e.target.value)}
           className="rounded-[20px] border border-gray-300 outline-none p-[12px_15px] box-border"
           placeholder="Password"
         />
         <p className="text-right underline text-gray-500">
           <span className="cursor-pointer font-sans text-[9px] font-bold hover:text-black">Forgot Password?</span>
         </p>
+        {/* Login btn */}
         <button className="p-[10px_15px] font-sans rounded-[20px] border-0 outline-none bg-black hover:bg-blue-500 text-white cursor-pointer shadow-md active:shadow-none">
           Log in
         </button>
@@ -28,14 +38,16 @@ const Login = () => {
       <p className="text-[10px] text-gray-500 font-sans">
         Don't have an account?
         <Link to='/signup'>
-          <span className="ml-[1px] text-[11px] underline text-teal-500 font-bold cursor-pointer no-underline ">Sign up</span></Link>
+          <span className="ml-[1px] text-[11px]  text-teal-500 font-bold cursor-pointer no-underline ">Sign up</span></Link>
       </p>
       <div className="w-full flex flex-col justify-start mt-[20px] gap-[15px]">
-        <div className="bg-black text-white border-2 border-black rounded-[20px] p-[10px_15px] flex justify-center items-center cursor-pointer shadow-md gap-[5px] hover:shadow-lg active:shadow-none transform active:scale-95 transition-transform duration-200">
-          <svg stroke="currentColor" fill="currentColor" strokeWidth="0" className="text-[18px] mb-[1px]" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-            <path d="M747.4 535.7c-.4-68.2 30.5-119.6 92.9-157.5-34.9-50-87.7-77.5-157.3-82.8-65.9-5.2-138 38.4-164.4 38.4-27.9 0-91.7-36.6-141.9-36.6C273.1 298.8 163 379.8 163 544.6c0 48.7 8.9 99 26.7 150.8 23.8 68.2 109.6 235.3 199.1 232.6 46.8-1.1 79.9-33.2 140.8-33.2 59.1 0 89.7 33.2 141.9 33.2 90.3-1.3 167.9-153.2 190.5-221.6-121.1-57.1-114.6-167.2-114.6-170.7zm-105.1-305c50.7-60.2 46.1-115 44.6-134.7-44.8 2.6-96.6 30.5-126.1 64.8-32.5 36.8-51.6 82.3-47.5 133.6 48.4 3.7 92.6-21.2 129-63.7z"></path>
-          </svg>
-          <span>Log in with Apple</span>
+
+        {/* {University login btn} */}
+
+        <div className="bg-[#922b21] text-white border-2 border-[#922b21] rounded-[20px] p-[10px_15px] flex justify-center items-center cursor-pointer shadow-md gap-[5px] hover:shadow-lg active:shadow-none transform active:scale-95 transition-transform duration-200">
+          <IoSchoolOutline size={'20px'} />
+
+          <span>Log in with University</span>
         </div>
         <div className="border-2 border-gray-500 rounded-[20px] p-[10px_15px] flex justify-center items-center cursor-pointer shadow-md gap-[5px] hover:shadow-lg active:shadow-none transform active:scale-95 transition-transform duration-200">
           <svg stroke="currentColor" fill="currentColor" strokeWidth="0" version="1.1" x="0px" y="0px" className="text-[18px] mb-[1px]" viewBox="0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
