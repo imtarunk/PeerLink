@@ -42,6 +42,7 @@ export const deletePost = async (req, res) => {
 export const likeOrDislike = async (req, res) => {
   try {
     const loggedInUserId = req.body.id;
+    const myProfile = await User.findById(loggedInUserId);
     const postId = req.params.id;
     const Post = await post.findById(postId);
 
@@ -49,12 +50,16 @@ export const likeOrDislike = async (req, res) => {
       //dislike
       await post.findByIdAndUpdate(postId, { $pull: { like: loggedInUserId } });
       return res.status(200).json({
-        message: "User remove like from  your post",
+        success: true,
+        message: `${myProfile.fullname} remove like from  your post`,
       });
     } else {
       //like
       await post.findByIdAndUpdate(postId, { $push: { like: loggedInUserId } });
-      return res.status(200).json({ message: "User liked your post" });
+      return res.status(200).json({
+        success: true,
+        message: `${myProfile.fullname} liked your post`,
+      });
     }
   } catch (error) {
     console.log(error);

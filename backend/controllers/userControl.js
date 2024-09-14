@@ -4,10 +4,12 @@ import jwt from "jsonwebtoken";
 
 export const Register = async (req, res) => {
   try {
-    const { fullname, email, password, gender, DOB } = req.body;
+    const { fullname, email, password, gender } = req.body;
     try {
-      if (!email || !password || !fullname || !gender || !DOB) {
-        return res.status(400).json({ message: "Please fill in all fields" });
+      if (!email || !password || !fullname || !gender) {
+        return res
+          .status(400)
+          .json({ message: "Please fill in all fields", success: false });
       }
     } catch (error) {
       console.log(error);
@@ -23,12 +25,41 @@ export const Register = async (req, res) => {
     }
     const hashedPassword = await bcryptjs.hash(password, 10);
 
+    // Store to keep track of already generated usernames (simulating a database)
+    const existingUsernames = new Set();
+
+    function generateUniqueUsername(email) {
+      // Extract the username part from the email (before '@')
+      const username = email.split("@")[0];
+
+      // Remove non-alphanumeric characters
+      const cleanUsername = username.replace(/[^a-zA-Z0-9]/g, "");
+
+      // Generate a unique component (random + timestamp)
+      let randomComponent = Math.random().toString(36).substring(2, 6); // random string of 4 characters
+      let timestamp = Date.now().toString().slice(-4); // last 4 digits of the current timestamp
+
+      // Combine cleaned username with random component and timestamp
+      let uniqueUsername = `${cleanUsername}${randomComponent}${timestamp}`;
+
+      // Ensure uniqueness (in a real application, you'd check against a database)
+      while (existingUsernames.has(uniqueUsername)) {
+        randomComponent = Math.random().toString(36).substring(2, 6); // regenerate random string
+        timestamp = Date.now().toString().slice(-4); // regenerate timestamp
+        uniqueUsername = `${cleanUsername}${randomComponent}${timestamp}`;
+      }
+
+      // Store the new unique username
+      existingUsernames.add(uniqueUsername);
+
+      return uniqueUsername;
+    }
     await User.create({
       fullname,
       email,
       password: hashedPassword,
       gender,
-      DOB,
+      userName: generateUniqueUsername(email),
     });
     return res.status(201).json({
       message: "Account created successfully.",
@@ -71,6 +102,8 @@ export const Login = async (req, res) => {
       .cookie("token", token, { expiresIn: "1d", httpOnly: true })
       .json({
         message: `Welcome back ${user.fullname}`,
+        user,
+        success: true,
       });
   } catch (error) {
     console.log(error);

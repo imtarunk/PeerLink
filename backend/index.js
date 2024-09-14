@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import userRoute from "./routes/userRoute.js";
 import postRoute from "./routes/postRoute.js";
 import dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config({
   path: ".env",
@@ -20,6 +21,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 // Use the auth router
 app.use("/api/v1/user", userRoute);
