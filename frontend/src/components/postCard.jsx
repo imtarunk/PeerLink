@@ -77,6 +77,16 @@ const PostCard = ({ post }) => {
     fetchPostData();
   }, [refresh]);
 
+  const handleDel = async (id) => {
+    try {
+
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.res.message)
+
+    }
+  }
+
   const handleMorebtn = () => {
     setMorebtnActive(!isMorebtnActive);
   };
@@ -142,7 +152,7 @@ const PostCard = ({ post }) => {
         </div>
         {user?._id === post?.userId && (
           <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer absolute right-2 ">
-            <TailwindSemiTransparentModal size="24px" />
+            <TailwindSemiTransparentModal size="24px" onClick={() => handleDel(post?._id)} />
           </div>
         )}
       </div>

@@ -12,7 +12,6 @@ const ProfileFeed = () => {
 
   const { user } = useSelector((state) => state.user)
   useGetProfile(user?._id)
-  const { profile } = useSelector((state) => state.user)
 
 
   return (
@@ -32,7 +31,7 @@ const ProfileFeed = () => {
               <p className='text-gray-500'></p>
             </div> </div>
           {/* Your user */}
-          <YourProfile profile={profile} />
+          <YourProfile />
 
         </div>
         <div className='flex justify-around text-gray-500 p-2 border-t-2 border-b-2' >

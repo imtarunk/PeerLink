@@ -14,11 +14,13 @@ import axios from 'axios';
 import { USER_API_END_POINT } from './util/endpoint';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
+import { useSelector } from 'react-redux';
 
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user)
+
   const handleLogout = async () => {
     try {
       const res = await axios.post(`${USER_API_END_POINT}/logout`)
@@ -58,7 +60,7 @@ const LeftSidebar = () => {
 
             <h1 className='font-bold text-lg ml-2'>Bookmarks</h1>
           </div>
-          <Link to='/profile'>
+          <Link to={`/profile/${user?._id}`}>
             <div className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full">
               <CiUser size="25px" />
               <h1 className='font-bold text-lg ml-2'>Profile</h1>
@@ -83,7 +85,7 @@ const LeftSidebar = () => {
 
 
         </div>
-        <Link to='/profile'>
+        <Link to={`/profile/${user?._id}`}>
           <UserProfile />
         </Link>
 
