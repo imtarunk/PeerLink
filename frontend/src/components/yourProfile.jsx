@@ -1,15 +1,18 @@
 import React from 'react'
-import { FaAws } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { USER_API_END_POINT } from './util/endpoint';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useDispatch } from "react-redux";
+import { getRefresh } from '../../../backend/redux/userSlice';
 
 
 
 
 const YourProfile = () => {
   const { user, profile } = useSelector((state) => state.user)
+  const { refresh } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
 
   const handleFollowUnfollow = async (id) => {
     console.log("click");
@@ -21,10 +24,7 @@ const YourProfile = () => {
         }, {
           withCredentials: true
         });
-
-        console.log(user?._id, user?.fullname);
-        console.log(profile?._id, profile?.fullname);
-        console.log(res);
+        dispatch(getRefresh());
 
         if (res.data.success) {
           toast.success(res.data.message);
@@ -42,6 +42,7 @@ const YourProfile = () => {
         });
 
         console.log(res);
+        dispatch(getRefresh());
 
         if (res.data.success) {
           toast.success(res.data.message);
@@ -56,7 +57,7 @@ const YourProfile = () => {
   return (
     <div className="bg-cover bg-center ">
       <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" alt="" />
-      <div className='flex items-center justify-center space-x-10 m-2'>
+      <div className='flex items-center justify-center space-x-10 m-2 box-border'>
         <img
           src={`data:image/png;base64,${profile?.profile}`}
           alt="Avatar"

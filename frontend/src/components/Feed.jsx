@@ -39,7 +39,7 @@ const Feed = () => {
     }
   };
   return (
-    <div className="w-[50%]  border-l border-r border-gray h-full relative left-[20%]">
+    <div className="w-full border-l border-r border-gray h-full">
       <center>
         <div className="flex items-center justify-evenly  border-b border-b-gray-200 h-12">
           <div className="w-full h-full  hover:border-b-4 border-blue-500 rounded-b-l">

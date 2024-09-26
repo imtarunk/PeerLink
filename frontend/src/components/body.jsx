@@ -6,6 +6,7 @@ import ProfileFeed from './Profile'
 import Login from './login';
 import Signup from './signup';
 import Authpage from './authPage';
+import BookmarkPage from './BookmarkPage'
 
 const Body = () => {
 
@@ -21,7 +22,12 @@ const Body = () => {
         {
           path: "/profile/:id",
           element: <ProfileFeed />,
+        },
+        {
+          path: "/bookmark",
+          element: <BookmarkPage />,
         }
+
       ]
     },
     {

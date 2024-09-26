@@ -15,7 +15,7 @@ const ProfileFeed = () => {
 
 
   return (
-    <div className='w-[50%]  border-l border-r border-gray h-[100vw] relative left-[20%] pl-.5 pr-.5 '>
+    <div className='border-l border-r border-gray h-full w-full'>
       <div >
         <div>
           <div className='flex space-x-10'>

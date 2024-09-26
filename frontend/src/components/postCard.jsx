@@ -124,7 +124,7 @@ const PostCard = ({ post }) => {
   }
 
   return (
-    <div className="h-auto border-b border-gray-200">
+    <div className="h-auto border-b border-gray-200 relative">
       <div className="flex items-center">
         <div width="55" className="m-2 flex flex-row">
           <img
@@ -135,7 +135,7 @@ const PostCard = ({ post }) => {
             height="60"
           />
         </div>
-        <div>
+        <div className="">
           <div className="flex flex-row space-x-2 items-center">
             <div>
               <h1 className="font-bold text-lg">{`${post?.userDetails[0].fullname} `}</h1>
@@ -152,7 +152,7 @@ const PostCard = ({ post }) => {
           </div>
         </div>
         {user?._id === post?.userId && (
-          <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer absolute right-2 ">
+          <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer absolute right-2">
             {/* <TailwindSemiTransparentModal del={}/> */}
             <MdOutlineDelete size="24px" onClick={() => handleDel(post?._id)} />
           </div>
