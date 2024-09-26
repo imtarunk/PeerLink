@@ -16,7 +16,7 @@ const Modal = ({ isOpen, onClose, onDelete, children }) => {
     <div className="fixed inset-0 bg-white bg-opacity-60 flex items-center justify-center z-50">
       <div
         className="p-6 rounded-lg shadow-lg max-w-md w-full mx-4 relative"
-        style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }} // 50% transparent white
+      // style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }} // 50% transparent white
       >
         <IoMdClose
           size={24}

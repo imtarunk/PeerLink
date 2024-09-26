@@ -10,14 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 import useGetPost from "../../../backend/hooks/useGetPost";
 import { getRefresh } from "../../../backend/redux/postSlice";
 import TailwindSemiTransparentModal from "./TailwindSemiTransparentModal";
-import { useParams } from "react-router-dom";
+import { MdOutlineDelete } from "react-icons/md";
+
 
 const PostCard = ({ post }) => {
   const [isLike, setLike] = useState(true);
   const [isBookmark, setBookmark] = useState(true);
-  const { user } = useSelector((store) => store.user);
+  const { user, posts } = useSelector((store) => store.user);
   const { refresh } = useSelector((store) => store.post);
-
   const [isMorebtnActive, setMorebtnActive] = useState(false);
   const dispatch = useDispatch();
 
@@ -77,13 +77,16 @@ const PostCard = ({ post }) => {
     fetchPostData();
   }, [refresh]);
 
+
   const handleDel = async (id) => {
     try {
-
+      axios.defaults.withCredentials = true;
+      const res = await axios.delete(`${POST_API_END_POINT}/delete/${id}`);
+      dispatch(getRefresh());
+      toast.success(res.data.message);
     } catch (error) {
+      toast.success(error.response.data.message);
       console.log(error);
-      toast.error(error.response.res.message)
-
     }
   }
 
@@ -146,13 +149,12 @@ const PostCard = ({ post }) => {
           </div>
           <div>
             <h2 className="text-blue-400">{`@${post?.userDetails[0]?.userName}`}</h2>
-            {console.log(post)
-            }
           </div>
         </div>
         {user?._id === post?.userId && (
           <div className="p-2 hover:bg-gray-200 rounded-full cursor-pointer absolute right-2 ">
-            <TailwindSemiTransparentModal size="24px" onClick={() => handleDel(post?._id)} />
+            {/* <TailwindSemiTransparentModal del={}/> */}
+            <MdOutlineDelete size="24px" onClick={() => handleDel(post?._id)} />
           </div>
         )}
       </div>
