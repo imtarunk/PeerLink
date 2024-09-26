@@ -6,19 +6,11 @@ import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { Link, useParams } from "react-router-dom";
 import useGetProfile from "../../../backend/hooks/useGetProflie";
-import useOtherUsers from "../../../backend/hooks/useOtherUser";
 
 const FriendRecbox = () => {
   const { id } = useParams();
   useGetProfile(id);
-  const { user, otherUsers, profile } = useSelector(store => store.user);
-
-
-
-
-
-
-
+  const { otherUsers } = useSelector(store => store.user);
 
 
   return (

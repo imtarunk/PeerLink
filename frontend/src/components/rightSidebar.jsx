@@ -11,7 +11,7 @@ const RightSidebar = () => {
   // console.log(user?._id)
   return (
 
-    <div className="fixed right-[10%] ">
+    <div className="fixed right-[5%] p-2 h-[100%] overflow-y-auto scrollbar-hide">
 
       <SearchComponent />
       <FriendRecbox otherUsers={otherUsers} />

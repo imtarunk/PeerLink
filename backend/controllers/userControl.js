@@ -1,6 +1,7 @@
 import { User } from "../models/userSchema.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import axios from "axios";
 
 export const Register = async (req, res) => {
   try {
@@ -54,12 +55,44 @@ export const Register = async (req, res) => {
 
       return uniqueUsername;
     }
+
+    const getAvatar = async (gender) => {
+      try {
+        let avatarUrl;
+
+        // Determine the avatar URL based on gender
+        if (gender === "Male") {
+          avatarUrl = "https://avatar.iran.liara.run/public/boy";
+        } else {
+          avatarUrl = "https://avatar.iran.liara.run/public/girl";
+        }
+
+        // Fetch the avatar
+        const response = await axios.get(avatarUrl, {
+          responseType: "arraybuffer",
+        });
+
+        // Convert binary data to base64
+        const avatarImage = Buffer.from(response.data, "binary").toString(
+          "base64"
+        );
+
+        return avatarImage; // Return the base64 encoded image
+      } catch (error) {
+        console.error("Error fetching the avatar:", error);
+        throw new Error("Failed to fetch the avatar");
+      }
+    };
+    // Fetch the avatar image based on gender
+    const profileImg = await getAvatar(gender);
+
     await User.create({
       fullname,
       email,
       password: hashedPassword,
       gender,
       userName: generateUniqueUsername(email),
+      profile: profileImg,
     });
     return res.status(201).json({
       message: "Account created successfully.",
@@ -122,7 +155,7 @@ export const bookmark = async (req, res) => {
     const postId = req.params.id; //postid
     const user = await User.findById(loggedInUserId); //Find login user by passing its id
 
-    if (user.Bookmark.includes(postId)) {
+    if (user.bookmarks.includes(postId)) {
       await User.findByIdAndUpdate(loggedInUserId, {
         $pull: { Bookmark: postId },
       });
@@ -133,7 +166,7 @@ export const bookmark = async (req, res) => {
     } else {
       // bookmark
       await User.findByIdAndUpdate(loggedInUserId, {
-        $push: { Bookmark: postId },
+        $push: { bookmarks: postId },
       });
       return res.status(200).json({
         message: "Saved to bookmarks.",
@@ -199,20 +232,22 @@ export const getPeopleList = async (req, res) => {
 
 export const follow = async (req, res) => {
   try {
-    const myUserid = req.body.id; //myid
+    const myUserid = req.body.id; //logined user details
     const userid = req.params.id; //tofollowid
     const myprofile = await User.findById(myUserid);
     const userProfile = await User.findById(userid);
     if (myprofile.following.includes(userid)) {
-      return res
-        .status(400)
-        .json({ message: "You are already following this user" });
+      return res.status(400).json({
+        message: "You are already following this user",
+        success: false,
+      });
     } else {
       await myprofile.updateOne({ $push: { following: userid } });
       await userProfile.updateOne({ $push: { followers: myUserid } });
     }
     return res.status(200).json({
-      message: `${myprofile.fullname} starting following ${userProfile.fullname} `,
+      message: `You starting following ${userProfile.fullname} `,
+      success: true,
     });
   } catch (error) {
     console.log(error);
@@ -234,7 +269,7 @@ export const unfollow = async (req, res) => {
       await userProfile.updateOne({ $pull: { followers: myUserid } });
     }
     return res.status(200).json({
-      message: `${myprofile.fullname} unfollow to ${userProfile.fullname}`,
+      message: `You unfollow to ${userProfile.fullname}`,
       success: true,
     });
   } catch (error) {

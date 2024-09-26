@@ -24,25 +24,24 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
     followers: {
       type: Array,
-      unique: true,
       default: [],
     },
     following: {
       type: Array,
-      unique: true,
       default: [],
     },
-    Bookmark: {
+    bookmarks: {
       type: Array,
       default: [],
     },
     profile: {
       type: String,
+      required: true,
     },
   },
   { timestamps: true }
 );
+
 export const User = mongoose.model("User", userSchema);
