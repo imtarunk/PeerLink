@@ -10,10 +10,28 @@ import { CiCircleMore } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
 import UserProfile from './userProfile'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
+import { USER_API_END_POINT } from './util/endpoint';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+
+
 
 const LeftSidebar = () => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/logout`)
+      toast.success(res.data.message)
+
+      navigate('/login')
+
+    } catch (error) {
+
+    }
+  }
   return (
-    <div className='fixed left-[5%] top-0 w-[20%] h-screen flex justify-center m-4 p-4 mt-1 pt-1 items-start'>
+    <div className='flex fixed left-[5%] top-0 w-[20%] h-screen justify-center p-4 mt-1 pt-1 items-start'>
       <center className='w-full space-x-1 space-y-5'>
         <div className="logo ">
           <img className="flex w-[65%]" src={travelmateLogo} alt="" />
@@ -50,7 +68,7 @@ const LeftSidebar = () => {
             <CiCircleMore size="25px" />
             <h1 className='font-bold text-lg ml-2'>More</h1>
           </div>
-          <div className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full">
+          <div className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full" onClick={handleLogout}>
             <CiLogout size="25px" />
             <h1 className='font-bold text-lg ml-2'>Logout</h1>
           </div>

@@ -1,20 +1,69 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
+import axios from 'axios';
 import { IoSchoolOutline } from "react-icons/io5";
+import toast from 'react-hot-toast';
+import { USER_API_END_POINT } from '../components/util/endpoint'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../../backend/redux/userSlice';
 
 
 const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [isLogin, setLogin] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (isLogin === false) {
+      try {
+        const res = await axios.post(`${USER_API_END_POINT}/login`,
+          { email, password },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,  // Ensures cookies are sent for authentication
+          }
+        );
+
+        console.log(res);
+
+        // Dispatch the Redux action to store the user profile
+        dispatch(getUser(res?.data?.user));
+        setLogin(!isLogin);
+
+        // If login is successful, update the local state and navigate
+        if (res.data.success) {
+          // Update the login status
+          navigate('/');  // Redirect to home or dashboard
+          toast.success(res?.data?.message);  // Display success message
+        }
+
+      } catch (error) {
+        console.error('Login failed:', error);
+        toast.error(res?.error?.data?.message || "An error occurred");
+      }
+    }
+  };
+
+  const hanleUniLogin = () => {
+
+  }
   return (
     <div className="w-[350px] h-auto bg-white shadow-[0_5px_15px_rgba(0,0,0,0.35)] rounded-[10px] p-[20px_30px] pt-[20px] pb-[30px] box-border">
       <p className="text-center font-sans font-extrabold text-[28px] my-[10px] mb-[30px]">Welcome back</p>
-      <form className="w-full flex flex-col gap-[18px] mb-[15px]">
+      <form className="w-full flex flex-col gap-[18px] mb-[15px]" onSubmit={handleSubmit}>
         {/* Email here */}
         <input
-          type="email"
+          type="text"
           value={email}
-          onClick={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           className="rounded-[20px] border border-gray-300 outline-none p-[12px_15px] box-border"
           placeholder="Email"
         />
@@ -22,7 +71,7 @@ const Login = () => {
         <input
           type="password"
           value={password}
-          onClick={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           className="rounded-[20px] border border-gray-300 outline-none p-[12px_15px] box-border"
           placeholder="Password"
         />
@@ -44,7 +93,7 @@ const Login = () => {
 
         {/* {University login btn} */}
 
-        <div className="bg-[#922b21] text-white border-2 border-[#922b21] rounded-[20px] p-[10px_15px] flex justify-center items-center cursor-pointer shadow-md gap-[5px] hover:shadow-lg active:shadow-none transform active:scale-95 transition-transform duration-200">
+        <div className="bg-[#922b21] text-white border-2 border-[#922b21] rounded-[20px] p-[10px_15px] flex justify-center items-center cursor-pointer shadow-md gap-[5px] hover:shadow-lg active:shadow-none transform active:scale-95 transition-transform duration-200" onClick={hanleUniLogin} >
           <IoSchoolOutline size={'20px'} />
 
           <span>Log in with University</span>
