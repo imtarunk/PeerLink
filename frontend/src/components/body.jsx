@@ -19,7 +19,7 @@ const Body = () => {
           element: <Feed />,
         },
         {
-          path: "/profile",
+          path: "/profile/:id",
           element: <ProfileFeed />,
         }
       ]
