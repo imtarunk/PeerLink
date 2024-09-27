@@ -1,10 +1,8 @@
 import axios from "axios";
 import { POST_API_END_POINT } from "../../frontend/src/components/util/endpoint";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getPost } from "../redux/postSlice";
-import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const useGetPost = (id) => {
   const dispatch = useDispatch();
@@ -18,7 +16,6 @@ const useGetPost = (id) => {
         // console.log(res);
         dispatch(getPost(res.data.Feeds));
       } catch (error) {
-        toast.error(error.res.data.message);
         console.log(error);
       }
     };
