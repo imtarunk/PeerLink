@@ -1,0 +1,7 @@
+{
+  "build": {
+    "commands": {
+      "build": "npm run build"
+    }
+  }
+}
