@@ -46,5 +46,6 @@
   },
   "engines": {
     "node": "16.x"
-  }
+  },
+  "packageManager": "pnpm@7.5.1"
 }
