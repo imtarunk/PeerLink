@@ -7,10 +7,15 @@ import Login from './login';
 import Signup from './signup';
 import Authpage from './authPage';
 import BookmarkPage from './BookmarkPage'
-
+import LandingPage from './hero-landingPage';
+LandingPage
 const Body = () => {
 
   const appRouter = createBrowserRouter([
+    {
+      path: '/landing-page',
+      element: <LandingPage />,
+    },
     {
       path: "/",
       element: <Home />,
