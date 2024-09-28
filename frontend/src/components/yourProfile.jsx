@@ -1,53 +1,42 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { USER_API_END_POINT } from './util/endpoint';
-import axios from 'axios';
-import toast from 'react-hot-toast';
-import { getRefresh } from '../../../backend/redux/userSlice';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { USER_API_END_POINT } from "./util/endpoint";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { getRefresh } from "../../../backend/redux/userSlice";
 
 const YourProfile = () => {
   const { user, profile } = useSelector((state) => state.user);
   const { refresh } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  // Define the handleFollowUnfollow function outside of useEffect
+  // Move the handleFollowUnfollow function outside the useEffect
   const handleFollowUnfollow = async (id) => {
-    console.log("click");
-    if (user?.following?.includes(id)) {
-      // User is already following, attempt to unfollow
+    if (user?.following?.includes(profile?._id)) {
       try {
-        const res = await axios.post(`${USER_API_END_POINT}/unfollow/${id}`, {
-          id: user?._id
-        }, {
-          withCredentials: true
-        });
-
-        dispatch(getRefresh());
-
-        if (res.data.success) {
-          toast.success(res.data.message);
-        }
-      } catch (error) {
-        console.error("Error unfollowing:", error);
-      }
-    }
-    else {
-      // User is not following, attempt to follow
-      try {
-        const res = await axios.post(`${USER_API_END_POINT}/follow/${id}`, {
-          id: user?._id
-        }, {
-          withCredentials: true
-        });
-
-        console.log(res);
-        dispatch(getRefresh());
-
-        if (res.data.success) {
-          toast.success(res.data.message);
-        }
+        const response = await axios.post(
+          `${USER_API_END_POINT}/unfollow/${id}`,
+          { id: user?._id },
+          { withCredentials: true }
+        );
+        dispatch(getRefresh()); // To refresh the component
+        toast.success(response.data.message);
       } catch (error) {
         console.log(error);
+        toast.error(error.response?.data?.message || "An error occurred");
+      }
+    } else {
+      try {
+        const response = await axios.post(
+          `${USER_API_END_POINT}/follow/${id}`,
+          { id: user?._id },
+          { withCredentials: true }
+        );
+        dispatch(getRefresh()); // To refresh the component
+        toast.success(response.data.message);
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response?.data?.message || "An error occurred");
       }
     }
   };
@@ -60,8 +49,12 @@ const YourProfile = () => {
   return (
     <div className="bg-cover bg-center">
       <img
-        src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"
-        alt=""
+        src={profile?.cover
+          ? `data:image/png;base64,${profile.cover}`
+          : "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"}
+        alt="Cover Image"
+        className="w-full h-[400px]"
+
       />
       <div className="flex items-center justify-center space-x-10 m-2 box-border">
         <img
@@ -70,26 +63,36 @@ const YourProfile = () => {
           className="mx-2 my-2 rounded-full border-5 border-blue-500 w-[20%]"
         />
         <div className="flex flex-col items-start justify-center">
-          <h2 className="text-2xl font-bold">{profile?.fullname || 'Full Name'}</h2>
+          <h2 className="text-2xl font-bold">
+            {profile?.fullname || "Full Name"}
+          </h2>
           <a href="">
-            <p className="text-blue-500">{`@${profile?.userName || 'username'}`}</p>
+            <p className="text-blue-500">{`@${profile?.userName || "username"}`}</p>
           </a>
         </div>
-        <div className="px-4 flex flex-col space-y-3 items-center">
-          <div className="flex flex-row space-x-1">
-            <div className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              {`Followers ${profile?.followers?.length || 0}`}
-            </div>
-            <div className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              {`Following ${profile?.following?.length || 0}`}
-            </div>
-          </div>
-          <div
-            className="w-[30%] bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded-full flex items-center justify-center"
-            onClick={() => handleFollowUnfollow(profile?._id)}
-          >
-            Follow/Unfollow
-          </div>
+        <div className="flex flex-col space-y-3 items-center">
+          <button className="bg-black text-gray-300 font-semibold text-base h-12 rounded-md px-3 cursor-pointer shadow-lg shadow-gray-400/15 flex items-center justify-center hover:bg-gray-800 w-full">
+            Followers
+            <span className="text-sm text-gray-500">&nbsp;{profile?.followers?.length}</span>
+          </button>
+          <button className="bg-black text-gray-300 font-semibold text-base h-12 rounded-md px-3 cursor-pointer shadow-lg shadow-gray-400/15 flex items-center justify-center hover:bg-gray-800 w-full">
+            Followings
+            <span className="text-sm text-gray-500">&nbsp; {profile?.following?.length}</span>
+          </button>
+
+          {/* Conditional rendering for follow/unfollow button */}
+          {user?._id === profile?._id ? (
+            <button className="bg-black text-gray-300 font-semibold text-base h-12 rounded-md px-3 cursor-pointer shadow-lg shadow-gray-400/15 flex items-center justify-center hover:bg-gray-800 w-full">
+              Edit Profile
+            </button>
+          ) : (
+            <button
+              className="bg-black text-gray-300 font-semibold text-base h-12 rounded-md px-3 cursor-pointer shadow-lg shadow-gray-400/15 flex items-center justify-center hover:bg-gray-800 w-full"
+              onClick={() => handleFollowUnfollow(profile?._id)}
+            >
+              {profile?.followers?.includes(user?._id) ? "Unfollow" : "Follow"}
+            </button>
+          )}
         </div>
       </div>
     </div>
