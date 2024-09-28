@@ -48,7 +48,7 @@ const YourProfile = () => {
           toast.success(res.data.message);
         }
       } catch (error) {
-        console.error("Error following:", error);
+        console.error(error);
       }
     }
 
