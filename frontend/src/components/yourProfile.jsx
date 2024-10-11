@@ -3,53 +3,51 @@ import { useSelector, useDispatch } from "react-redux";
 import { USER_API_END_POINT } from "./util/endpoint";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { getRefresh } from "../../../backend/redux/userSlice";
+import { getRefresh } from "../../../backend/redux/postSlice";
+import { followingUpdate, getMyProfile } from '../../../backend/redux/userSlice';
+import { useParams } from 'react-router-dom'
+import useGetProfile from '../../../backend/hooks/useGetProflie'
 
 const YourProfile = () => {
   const { user, profile } = useSelector((state) => state.user);
-  const { refresh } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
+  const { id } = useParams();
+  useGetProfile(id);
 
-  const handleEdit = () => {
-    console.log("click");
-    setIsEditing(true); // Toggle editing mode
-  };
 
-  const handleFollowUnfollow = async (id) => {
-    if (user?.following?.includes(profile?._id)) {
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  }
+
+  const followAndUnfollowHandler = async () => {
+    if (user.following.includes(id)) {
+      // Unfollow
       try {
-        const response = await axios.post(
-          `${USER_API_END_POINT}/unfollow/${id}`,
-          { id: user?._id },
-          { withCredentials: true }
-        );
-        dispatch(getRefresh()); // To refresh the component
-        toast.success(response.data.message);
+        axios.defaults.withCredentials = true;
+        const res = await axios.post(`${USER_API_END_POINT}/unfollow/${id}`, { id: user?._id });
+        dispatch(followingUpdate(id));
+        dispatch(getRefresh());
+        toast.success(res.data.message);
       } catch (error) {
-        console.log(error);
-        toast.error(error.response?.data?.message || "An error occurred");
+        toast.error(error.response.data.message);
       }
     } else {
+      // Follow
       try {
-        const response = await axios.post(
-          `${USER_API_END_POINT}/follow/${id}`,
-          { id: user?._id },
-          { withCredentials: true }
-        );
-        dispatch(getRefresh()); // To refresh the component
-        toast.success(response.data.message);
+        axios.defaults.withCredentials = true;
+        const res = await axios.post(`${USER_API_END_POINT}/follow/${id}`, { id: user?._id });
+        dispatch(followingUpdate(id));
+        dispatch(getRefresh());
+        toast.success(res.data.message);
       } catch (error) {
-        console.log(error);
-        toast.error(error.response?.data?.message || "An error occurred");
+        toast.error(error.response.data.message);
       }
     }
-  };
-
-  // Refresh the component when the 'refresh' state changes
-  useEffect(() => {
-    // This will run when 'refresh' is updated
-  }, [refresh]);
+  }
 
   return (
     <div className="bg-cover bg-center">
@@ -94,14 +92,14 @@ const YourProfile = () => {
           {user?._id === profile?._id ? (
             <button
               className="bg-black text-gray-300 font-semibold text-base h-12 rounded-md px-3 cursor-pointer shadow-lg shadow-gray-400/15 flex items-center justify-center hover:bg-gray-800 w-full"
-              onClick={handleEdit}
+              onClick={() => setIsEditing(true)}
             >
               Edit Profile
             </button>
           ) : (
             <button
               className="bg-black text-gray-300 font-semibold text-base h-12 rounded-md px-3 cursor-pointer shadow-lg shadow-gray-400/15 flex items-center justify-center hover:bg-gray-800 w-full"
-              onClick={() => handleFollowUnfollow(profile?._id)}
+              onClick={followAndUnfollowHandler}
             >
               {profile?.followers?.includes(user?._id) ? "Unfollow" : "Follow"}
             </button>
@@ -111,27 +109,35 @@ const YourProfile = () => {
 
       {isEditing && (
         <div>
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
               placeholder="Change profile name"
               className="w-full m-2 p-2"
               required
             />
             <input
               type="text"
+              value={newUserId}
+              onChange={(e) => setNewUserId(e.target.value)}
               placeholder="User ID"
               className="w-full m-2 p-2"
               required
             />
             <input
               type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Password"
               className="w-full m-2 p-2"
               required
             />
             <input
               type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm password"
               className="w-full m-2 p-2"
               required
