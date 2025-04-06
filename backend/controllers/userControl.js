@@ -83,9 +83,33 @@ export const Register = async (req, res) => {
         throw new Error("Failed to fetch the avatar");
       }
     };
+    const getCover = async () => {
+      try {
+        // Set the cover URL
+        const coverURL = "https://picsum.photos/1000/400";
+
+        // Fetch the cover image
+        const response = await axios.get(coverURL, {
+          responseType: "arraybuffer",
+        });
+
+        // Log response for debugging
+        console.log("Cover image response:", response);
+
+        // Convert binary data to base64
+        const coverImage = Buffer.from(response.data, "binary").toString(
+          "base64"
+        );
+
+        return coverImage; // Return the base64 encoded image
+      } catch (error) {
+        console.error("Error fetching the cover image:", error);
+        throw new Error("Failed to fetch the cover image");
+      }
+    };
     // Fetch the avatar image based on gender
     const profileImg = await getAvatar(gender);
-
+    const coverImg = await getCover();
     await User.create({
       fullname,
       email,
@@ -93,6 +117,7 @@ export const Register = async (req, res) => {
       gender,
       userName: generateUniqueUsername(email),
       profile: profileImg,
+      cover: coverImg,
     });
     return res.status(201).json({
       message: "Account created successfully.",

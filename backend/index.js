@@ -4,12 +4,10 @@ import databaseConnection from "./config/database.js";
 import cookieParser from "cookie-parser";
 import userRoute from "./routes/userRoute.js";
 import postRoute from "./routes/postRoute.js";
-import dotenv from "dotenv";
+import "dotenv/config";
 import cors from "cors";
+import mongoose from "mongoose";
 
-dotenv.config({
-  path: ".env",
-});
 databaseConnection();
 const app = express();
 
