@@ -21,6 +21,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
+app.get("/test", (req, res) => {
+  res.send("test route"); // test route
+});
+
 // Use the auth router
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/post", postRoute);
