@@ -9,6 +9,7 @@ import {
   getPeopleList,
   follow,
   unfollow,
+  test,
 } from "../controllers/userControl.js";
 import { isAuthenticated } from "../config/auth.js";
 
@@ -23,6 +24,7 @@ router.route("/profile/notAuth/:id").get(MyProfileForOther);
 router.route("/people/:id").get(isAuthenticated, getPeopleList);
 router.route("/follow/:id").post(isAuthenticated, follow);
 router.route("/unfollow/:id").post(isAuthenticated, unfollow);
+router.route("/").get(test);
 
 // router.route("/createpost").post(isAuthenticated, createPost);
 

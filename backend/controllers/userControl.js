@@ -301,4 +301,9 @@ export const unfollow = async (req, res) => {
     console.log(error);
   }
 };
+
+export const test = async (req, res) => {
+  res.send("This is end point is working ");
+  return;
+};
 ///////////4:05:00
